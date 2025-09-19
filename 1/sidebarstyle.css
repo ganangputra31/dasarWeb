@@ -1,0 +1,58 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+}
+
+
+.container {
+    display: flex;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 20px;
+}
+.sidebar1 {
+    flex: 1;
+    order: 1;
+    background: #f9d5e5;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+
+.content {
+    flex: 3;
+    order: 2;
+    background: url("https://picsum.photos/600/400?blur") no-repeat center;
+    background-size: cover;
+    color: yellow;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.sidebar2 {
+    flex: 1;
+    order: 3;
+    background: #d5e5f9;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+h2, h3 {
+    margin-top: 0;
+}
+
+
+ul li a {
+    color: blue;
+    text-decoration: none;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
