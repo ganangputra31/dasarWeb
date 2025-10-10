@@ -1,75 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form Validasi dengan AJAX</title>
+    <title>Form Input dengan Validasi dan AJAX</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>Form Input dengan Validasi AJAX</h1>
+    <h1>Form Input dengan Validasi dan AJAX</h1>
+    <form id="myForm" method="post">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama">
+        <span id="nama-error" style="color:red;"></span><br>
 
-<form id="myForm">
-    <label for="nama">Nama:</label>
-    <input type="text" id="nama" name="nama">
-    <span id="nama-error" style="color: red;"></span><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <span id="email-error" style="color:red;"></span><br>
 
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email">
-    <span id="email-error" style="color: red;"></span><br>
+        <input type="submit" value="Submit">
+    </form>
 
-    <input type="submit" value="Submit">
-</form>
+    <div id="result"></div> <!-- Tempat menampilkan hasil dari PHP -->
 
-<hr>
-<div id="hasil"></div>
+    <script>
+    $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+            event.preventDefault(); // Hentikan pengiriman form biasa
 
-<script>
-$(document).ready(function () {
-    $("#myForm").submit(function (e) {
-        e.preventDefault(); // Mencegah reload halaman
+            var nama = $("#nama").val();
+            var email = $("#email").val();
+            var valid = true;
 
-        // Ambil data form
-        var formData = $(this).serialize();
+            // Validasi sederhana
+            if (nama === "") {
+                $("#nama-error").text("Nama harus diisi.");
+                valid = false;
+            } else {
+                $("#nama-error").text("");
+            }
 
-        // Kirim ke server lewat AJAX
-        $.ajax({
-            url: "proses_validasi_ajax.php",
-            type: "POST",
-            data: formData,
-            success: function (response) {
-                $("#hasil").html(response); // Tampilkan hasil validasi di bawah form
+            if (email === "") {
+                $("#email-error").text("Email harus diisi.");
+                valid = false;
+            } else {
+                $("#email-error").text("");
+            }
+
+            if (valid) {
+                // Kirim data ke PHP menggunakan AJAX
+                $.ajax({
+                    url: "form_validationajax.php",
+                    type: "POST",
+                    data: { nama: nama, email: email },
+                    success: function(response) {
+                        $("#result").html(response); // Tampilkan hasil dari PHP
+                    },
+                    error: function() {
+                        $("#result").html("<p style='color:red;'>Terjadi kesalahan saat mengirim data.</p>");
+                    }
+                });
             }
         });
     });
-});
-</script>
+    </script>
 </body>
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = trim($_POST["nama"]);
-    $email = trim($_POST["email"]);
-    $errors = [];
-
-    // Validasi Nama
-    if (empty($nama)) {
-        $errors[] = "Nama harus diisi.";
-    }
-
-    // Validasi Email
-    if (empty($email)) {
-        $errors[] = "Email harus diisi.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Format email tidak valid.";
-    }
-
-    // Tampilkan hasil
-    if (!empty($errors)) {
-        foreach ($errors as $error) {
-            echo "<span style='color:red;'>$error</span><br>";
-        }
-    } else {
-        echo "<span style='color:green;'>Data berhasil dikirim!<br>Nama: $nama<br>Email: $email</span>";
-    }
-}
-?>

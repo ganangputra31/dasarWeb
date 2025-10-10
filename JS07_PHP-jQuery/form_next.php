@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Form Contoh</h2>
-    <form method="POST" action="proses_lanjut.php">
+    <form method="POST" action="html_next.php">
         <label for="buah">Pilih Buah:</label>
         <select name="buah" id="buah">
             <option value="apel">Apel</option>
@@ -35,27 +35,5 @@
 </body>
 </html>
 
-<?php 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $selectedBuah = $_POST['buah'];
 
-    if (isset($_POST['warna'])) {
-        $selectedWarna = $_POST['warna'];
-    } else {
-        $selectedWarna = [];
-    }
-
-    $selectedJenisKelamin = $_POST['jenis_kelamin'];
-
-    echo "Anda memilih buah: " . $selectedBuah . "<br>";
-
-    if (!empty($selectedWarna)) {
-        echo "Warna favorit Anda: " . implode(", ", $selectedWarna) . "<br>";
-    } else {
-        echo "Anda tidak memilih warna favorit.<br>";
-    }
-
-    echo "Jenis kelamin Anda: " . $selectedJenisKelamin;
-}
-?>
 

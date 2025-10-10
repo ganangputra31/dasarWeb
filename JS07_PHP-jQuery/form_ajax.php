@@ -46,7 +46,7 @@ $(document).ready(function () {
 
         // Kirim data ke server PHP
         $.ajax({
-            url: "proses_lanjut.php", // Ganti dengan nama file PHP yang sesuai
+            url: "html_next.php", // Ganti dengan nama file PHP yang sesuai
             type: "POST",
             data: formData,
             success: function (response) {
